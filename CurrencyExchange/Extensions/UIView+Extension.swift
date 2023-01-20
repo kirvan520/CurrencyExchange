@@ -26,3 +26,26 @@ extension UIView {
     }
 }
 
+//MARK: Loading indicator.
+
+extension UIView {
+    func showLoading() {
+        let activityIndicatorView = UIActivityIndicatorView(style: .medium)
+        activityIndicatorView.startAnimating()
+        activityIndicatorView.center = self.center
+        activityIndicatorView.tag = 55555
+        activityIndicatorView.startAnimating()
+        
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.addSubview(activityIndicatorView)
+        }
+    }
+    
+    func hideLoading() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.viewWithTag(55555)?.removeFromSuperview()
+        }
+    }
+}

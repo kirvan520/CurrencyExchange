@@ -6,9 +6,10 @@
 //
 
 import UIKit
+import Combine
 
 class CurrencySelectionViewController: UIViewController {
-
+    
     @IBOutlet weak var currencySelectionContainer: UIView!
     @IBOutlet weak var baseCurrencyContainer: UIView!
     @IBOutlet weak var targetCurrencyContainer: UIView!
@@ -17,8 +18,9 @@ class CurrencySelectionViewController: UIViewController {
     @IBOutlet weak var amountInputTextField: UITextField!
     @IBOutlet weak var calculateButton: UIButton!
     
+    private var cancellables: Set<AnyCancellable> = []
     private let viewModel: CurrencySelectionViewModel
-
+    
     // MARK: Initialization
     
     init(viewModel: CurrencySelectionViewModel) {
@@ -34,6 +36,7 @@ class CurrencySelectionViewController: UIViewController {
         super.viewDidLoad()
         
         setupView()
+        setupBindings()
     }
     
     // MARK: Private methods
@@ -45,15 +48,61 @@ class CurrencySelectionViewController: UIViewController {
         calculateButton.applyDefaultShadow()
     }
     
+    private func setupBindings() {
+        
+        viewModel.getSupportedCurrencyCodes()
+        
+        // show/hide loading indicator.
+        viewModel.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                guard let self = self else { return }
+                
+                switch state {
+                case .isLoading:
+                    self.view.showLoading()
+                case .isFinished:
+                    self.view.hideLoading()
+                case .failed(let error):
+                    print(error)
+                }
+            }.store(in: &cancellables)
+        
+        // Update base currency.
+        viewModel.$baseCurrency.sink { [weak self] baseCurrency in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.baseCurrencyLabel.text = baseCurrency
+            }
+        }.store(in: &cancellables)
+        
+        // Update target currency.
+        viewModel.$targetCurrency.sink { [weak self] targetCurrency in
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                self.targetCurrencyLabel.text = targetCurrency
+            }
+        }.store(in: &cancellables)
+        
+        //Show currency selection picker
+        viewModel.showCurrencySelectionPickerView.sink { [weak self] in
+            guard let self = self else { return }
+            
+            self.showCurrencyPickerView()
+        }
+        .store(in: &cancellables)
+    }
     
     // MARK: UIButton action methods
-
+    
     @IBAction func baseCurrencyArrowButtonAction(_ sender: Any) {
-        showCurrencyPickerView()
+        viewModel.isBaseCurrencySelected = true
     }
     
     @IBAction func targetCurrencyArrowButtonAction(_ sender: Any) {
-        showCurrencyPickerView()
+        viewModel.isBaseCurrencySelected = false
     }
     
     @IBAction func calculateButtonAction(_ sender: Any) {
@@ -61,17 +110,7 @@ class CurrencySelectionViewController: UIViewController {
     
 }
 
-var supportedCodes = [
-    ["AED", "UAE Dirham"],
-    ["AFN", "Afghan Afghani"],
-    ["ALL","Albanian Lek"],
-    ["AMD","Armenian Dram"],
-    ["ANG","Netherlands Antillian Guilder"],
-    ["AOA","Angolan Kwanza"],
-    ["ARS","Argentine Peso"],
-    ["AUD","Australian Dollar"],
-    ["AWG","Aruban Florin"]
-]
+// MARK: Showing UIPickerView
 
 extension CurrencySelectionViewController {
     func showCurrencyPickerView() {
@@ -82,7 +121,9 @@ extension CurrencySelectionViewController {
         let picker = UIPickerView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         picker.dataSource = self
         picker.delegate = self
-                
+
+        picker.selectRow(viewModel.selectedCurrencyRow, inComponent: 0, animated: false)
+
         viewController.view.addSubview(picker)
         picker.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor).isActive = true
         picker.centerYAnchor.constraint(equalTo: viewController.view.centerYAnchor).isActive = true
@@ -95,21 +136,25 @@ extension CurrencySelectionViewController {
     }
 }
 
+// MARK: UIPickerViewDataSource
+
 extension CurrencySelectionViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        supportedCodes.count
+        viewModel.supportedCurrencyCodes.count
     }
 }
+
+// MARK: UIPickerViewDelegate
 
 extension CurrencySelectionViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: pickerView.frame.size.width, height: 30))
         label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        let currency = supportedCodes[row]
+        let currency = viewModel.supportedCurrencyCodes[row]
         if let fullName = currency.last, let code = currency.first {
             label.text = "\(fullName) -- \(code)"
         }
@@ -118,5 +163,6 @@ extension CurrencySelectionViewController: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.viewModel.pickerViewSelectedRow = row
     }
 }
