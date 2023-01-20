@@ -30,6 +30,8 @@ extension UIView {
 
 extension UIView {
     func showLoading() {
+        guard self.viewWithTag(55555) == nil else { return }
+    
         let activityIndicatorView = UIActivityIndicatorView(style: .medium)
         activityIndicatorView.startAnimating()
         activityIndicatorView.center = self.center

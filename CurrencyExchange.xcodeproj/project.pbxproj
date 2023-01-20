@@ -31,6 +31,9 @@
 		9F4BC53F297AF63D001FE330 /* SupportedCurrencyCodesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC53E297AF63D001FE330 /* SupportedCurrencyCodesResponse.swift */; };
 		9F4BC541297AF6A3001FE330 /* ExchangeRateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC540297AF6A3001FE330 /* ExchangeRateModel.swift */; };
 		9F4BC544297AF763001FE330 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC543297AF763001FE330 /* Constants.swift */; };
+		9F4BC546297B0955001FE330 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC545297B0955001FE330 /* Date+Extension.swift */; };
+		9F4BC548297B144A001FE330 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC547297B144A001FE330 /* UserDefaults+Extension.swift */; };
+		9F4BC54A297B1AD5001FE330 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC549297B1AD5001FE330 /* UITextField+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +82,9 @@
 		9F4BC53E297AF63D001FE330 /* SupportedCurrencyCodesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedCurrencyCodesResponse.swift; sourceTree = "<group>"; };
 		9F4BC540297AF6A3001FE330 /* ExchangeRateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateModel.swift; sourceTree = "<group>"; };
 		9F4BC543297AF763001FE330 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		9F4BC545297B0955001FE330 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
+		9F4BC547297B144A001FE330 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
+		9F4BC549297B1AD5001FE330 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +216,9 @@
 			isa = PBXGroup;
 			children = (
 				9F4BC52B297AEB1B001FE330 /* UIView+Extension.swift */,
+				9F4BC545297B0955001FE330 /* Date+Extension.swift */,
+				9F4BC547297B144A001FE330 /* UserDefaults+Extension.swift */,
+				9F4BC549297B1AD5001FE330 /* UITextField+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -408,6 +417,7 @@
 				9F4BC541297AF6A3001FE330 /* ExchangeRateModel.swift in Sources */,
 				9F4BC530297AF46A001FE330 /* APIError.swift in Sources */,
 				9F4BC52C297AEB1B001FE330 /* UIView+Extension.swift in Sources */,
+				9F4BC54A297B1AD5001FE330 /* UITextField+Extension.swift in Sources */,
 				9F4BC522297ADA10001FE330 /* CurrencySelectionViewController.swift in Sources */,
 				9F4BC539297AF51E001FE330 /* ExchangerateRequest.swift in Sources */,
 				9F4BC51A297AD96D001FE330 /* Coordinator.swift in Sources */,
@@ -416,6 +426,8 @@
 				9F4BC53F297AF63D001FE330 /* SupportedCurrencyCodesResponse.swift in Sources */,
 				9F4BC4EA297AD80E001FE330 /* SceneDelegate.swift in Sources */,
 				9F4BC534297AF497001FE330 /* APIClient.swift in Sources */,
+				9F4BC546297B0955001FE330 /* Date+Extension.swift in Sources */,
+				9F4BC548297B144A001FE330 /* UserDefaults+Extension.swift in Sources */,
 				9F4BC544297AF763001FE330 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

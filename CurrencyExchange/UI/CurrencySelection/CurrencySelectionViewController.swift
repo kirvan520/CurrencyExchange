@@ -39,6 +39,12 @@ class CurrencySelectionViewController: UIViewController {
         setupBindings()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        viewModel.onAppear.send()
+    }
+    
     // MARK: Private methods
     
     private func setupView() {
@@ -49,8 +55,6 @@ class CurrencySelectionViewController: UIViewController {
     }
     
     private func setupBindings() {
-        
-        viewModel.getSupportedCurrencyCodes()
         
         // show/hide loading indicator.
         viewModel.$state
@@ -87,12 +91,32 @@ class CurrencySelectionViewController: UIViewController {
         }.store(in: &cancellables)
         
         //Show currency selection picker
-        viewModel.showCurrencySelectionPickerView.sink { [weak self] in
+        viewModel.showCurrencySelectionPickerView.sink { [weak self] selectedRow in
             guard let self = self else { return }
             
-            self.showCurrencyPickerView()
+            self.showCurrencyPickerViewWith(selectedRow)
         }
         .store(in: &cancellables)
+        
+        viewModel.isEnableCalcualte
+            .receive(on: RunLoop.main)
+            .assign(to: \.isEnabled, on: calculateButton)
+            .store(in: &cancellables)
+        
+        amountInputTextField.textPublisher()
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] value in
+                guard let self = self else { return }
+                self.viewModel.amountToConvert = (value as NSString).doubleValue
+            })
+            .store(in: &cancellables)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        self.view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
     // MARK: UIButton action methods
@@ -106,14 +130,16 @@ class CurrencySelectionViewController: UIViewController {
     }
     
     @IBAction func calculateButtonAction(_ sender: Any) {
+        viewModel.handleCalculateAction()
     }
-    
 }
 
 // MARK: Showing UIPickerView
 
 extension CurrencySelectionViewController {
-    func showCurrencyPickerView() {
+    func showCurrencyPickerViewWith(_ selectedRow: Int) {
+        self.view.endEditing(true)
+        
         let size = CGSize(width: UIScreen.main.bounds.width - 16, height: UIScreen.main.bounds.height / 2)
         
         let viewController = UIViewController()
@@ -121,16 +147,16 @@ extension CurrencySelectionViewController {
         let picker = UIPickerView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         picker.dataSource = self
         picker.delegate = self
-
-        picker.selectRow(viewModel.selectedCurrencyRow, inComponent: 0, animated: false)
-
+        
+        picker.selectRow(selectedRow, inComponent: 0, animated: false)
+        
         viewController.view.addSubview(picker)
         picker.centerXAnchor.constraint(equalTo: viewController.view.centerXAnchor).isActive = true
         picker.centerYAnchor.constraint(equalTo: viewController.view.centerYAnchor).isActive = true
         
         let alert = UIAlertController(title: "Select Currency", message: "", preferredStyle: .actionSheet)
         alert.setValue(viewController, forKey: "contentViewController")
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Close", style: .cancel, handler: { (UIAlertAction) in
         }))
         self.present(alert, animated: true, completion: nil)
     }
@@ -139,9 +165,7 @@ extension CurrencySelectionViewController {
 // MARK: UIPickerViewDataSource
 
 extension CurrencySelectionViewController: UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
+    func numberOfComponents(in pickerView: UIPickerView) -> Int { return 1 }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         viewModel.supportedCurrencyCodes.count
