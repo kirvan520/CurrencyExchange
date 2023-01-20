@@ -21,6 +21,7 @@
 		9F4BC523297ADA10001FE330 /* CurrencySelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F4BC521297ADA10001FE330 /* CurrencySelectionViewController.xib */; };
 		9F4BC525297ADA93001FE330 /* CurrencySelectionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC524297ADA93001FE330 /* CurrencySelectionCoordinator.swift */; };
 		9F4BC527297ADAE2001FE330 /* CurrencySelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC526297ADAE2001FE330 /* CurrencySelectionViewModel.swift */; };
+		9F4BC52C297AEB1B001FE330 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC52B297AEB1B001FE330 /* UIView+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +60,7 @@
 		9F4BC521297ADA10001FE330 /* CurrencySelectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrencySelectionViewController.xib; sourceTree = "<group>"; };
 		9F4BC524297ADA93001FE330 /* CurrencySelectionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionCoordinator.swift; sourceTree = "<group>"; };
 		9F4BC526297ADAE2001FE330 /* CurrencySelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectionViewModel.swift; sourceTree = "<group>"; };
+		9F4BC52B297AEB1B001FE330 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 		9F4BC4E6297AD80E001FE330 /* CurrencyExchange */ = {
 			isa = PBXGroup;
 			children = (
+				9F4BC52A297AEABE001FE330 /* Extensions */,
 				9F4BC517297AD92D001FE330 /* UI */,
 				9F4BC518297AD945001FE330 /* AppCoordinator */,
 				9F4BC528297ADD43001FE330 /* App&Scene Delegates */,
@@ -180,6 +183,14 @@
 				9F4BC4F2297AD810001FE330 /* LaunchScreen.storyboard */,
 			);
 			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		9F4BC52A297AEABE001FE330 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9F4BC52B297AEB1B001FE330 /* UIView+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -316,6 +327,7 @@
 				9F4BC51E297AD9AF001FE330 /* AppCoordinator.swift in Sources */,
 				9F4BC51C297AD98C001FE330 /* BaseCoordinator.swift in Sources */,
 				9F4BC525297ADA93001FE330 /* CurrencySelectionCoordinator.swift in Sources */,
+				9F4BC52C297AEB1B001FE330 /* UIView+Extension.swift in Sources */,
 				9F4BC522297ADA10001FE330 /* CurrencySelectionViewController.swift in Sources */,
 				9F4BC51A297AD96D001FE330 /* Coordinator.swift in Sources */,
 				9F4BC527297ADAE2001FE330 /* CurrencySelectionViewModel.swift in Sources */,
