@@ -34,6 +34,11 @@
 		9F4BC546297B0955001FE330 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC545297B0955001FE330 /* Date+Extension.swift */; };
 		9F4BC548297B144A001FE330 /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC547297B144A001FE330 /* UserDefaults+Extension.swift */; };
 		9F4BC54A297B1AD5001FE330 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC549297B1AD5001FE330 /* UITextField+Extension.swift */; };
+		9F4BC54D297B1D7D001FE330 /* CurrencyConversionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC54C297B1D7D001FE330 /* CurrencyConversionViewModel.swift */; };
+		9F4BC54F297B1D8B001FE330 /* CurrencyConversionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC54E297B1D8B001FE330 /* CurrencyConversionCoordinator.swift */; };
+		9F4BC552297B1D9A001FE330 /* CurrencyConversionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC550297B1D9A001FE330 /* CurrencyConversionViewController.swift */; };
+		9F4BC553297B1D9A001FE330 /* CurrencyConversionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F4BC551297B1D9A001FE330 /* CurrencyConversionViewController.xib */; };
+		9F4BC555297B24C0001FE330 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4BC554297B24C0001FE330 /* Double.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +90,11 @@
 		9F4BC545297B0955001FE330 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		9F4BC547297B144A001FE330 /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		9F4BC549297B1AD5001FE330 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
+		9F4BC54C297B1D7D001FE330 /* CurrencyConversionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConversionViewModel.swift; sourceTree = "<group>"; };
+		9F4BC54E297B1D8B001FE330 /* CurrencyConversionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConversionCoordinator.swift; sourceTree = "<group>"; };
+		9F4BC550297B1D9A001FE330 /* CurrencyConversionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConversionViewController.swift; sourceTree = "<group>"; };
+		9F4BC551297B1D9A001FE330 /* CurrencyConversionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrencyConversionViewController.xib; sourceTree = "<group>"; };
+		9F4BC554297B24C0001FE330 /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				9F4BC51F297AD9D7001FE330 /* CurrencySelection */,
+				9F4BC54B297B1D46001FE330 /* CurrencyConvertion */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -219,6 +230,7 @@
 				9F4BC545297B0955001FE330 /* Date+Extension.swift */,
 				9F4BC547297B144A001FE330 /* UserDefaults+Extension.swift */,
 				9F4BC549297B1AD5001FE330 /* UITextField+Extension.swift */,
+				9F4BC554297B24C0001FE330 /* Double.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -275,6 +287,17 @@
 				9F4BC543297AF763001FE330 /* Constants.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		9F4BC54B297B1D46001FE330 /* CurrencyConvertion */ = {
+			isa = PBXGroup;
+			children = (
+				9F4BC54E297B1D8B001FE330 /* CurrencyConversionCoordinator.swift */,
+				9F4BC54C297B1D7D001FE330 /* CurrencyConversionViewModel.swift */,
+				9F4BC550297B1D9A001FE330 /* CurrencyConversionViewController.swift */,
+				9F4BC551297B1D9A001FE330 /* CurrencyConversionViewController.xib */,
+			);
+			path = CurrencyConvertion;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,6 +405,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F4BC523297ADA10001FE330 /* CurrencySelectionViewController.xib in Resources */,
+				9F4BC553297B1D9A001FE330 /* CurrencyConversionViewController.xib in Resources */,
 				9F4BC4F4297AD810001FE330 /* LaunchScreen.storyboard in Resources */,
 				9F4BC4F1297AD810001FE330 /* Assets.xcassets in Resources */,
 			);
@@ -409,11 +433,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F4BC51E297AD9AF001FE330 /* AppCoordinator.swift in Sources */,
+				9F4BC552297B1D9A001FE330 /* CurrencyConversionViewController.swift in Sources */,
+				9F4BC54D297B1D7D001FE330 /* CurrencyConversionViewModel.swift in Sources */,
 				9F4BC51C297AD98C001FE330 /* BaseCoordinator.swift in Sources */,
 				9F4BC536297AF4C1001FE330 /* APIRequest.swift in Sources */,
 				9F4BC53C297AF55A001FE330 /* ExchangeRateService.swift in Sources */,
 				9F4BC532297AF483001FE330 /* APIProtocol.swift in Sources */,
 				9F4BC525297ADA93001FE330 /* CurrencySelectionCoordinator.swift in Sources */,
+				9F4BC555297B24C0001FE330 /* Double.swift in Sources */,
 				9F4BC541297AF6A3001FE330 /* ExchangeRateModel.swift in Sources */,
 				9F4BC530297AF46A001FE330 /* APIError.swift in Sources */,
 				9F4BC52C297AEB1B001FE330 /* UIView+Extension.swift in Sources */,
@@ -421,6 +448,7 @@
 				9F4BC522297ADA10001FE330 /* CurrencySelectionViewController.swift in Sources */,
 				9F4BC539297AF51E001FE330 /* ExchangerateRequest.swift in Sources */,
 				9F4BC51A297AD96D001FE330 /* Coordinator.swift in Sources */,
+				9F4BC54F297B1D8B001FE330 /* CurrencyConversionCoordinator.swift in Sources */,
 				9F4BC527297ADAE2001FE330 /* CurrencySelectionViewModel.swift in Sources */,
 				9F4BC4E8297AD80E001FE330 /* AppDelegate.swift in Sources */,
 				9F4BC53F297AF63D001FE330 /* SupportedCurrencyCodesResponse.swift in Sources */,

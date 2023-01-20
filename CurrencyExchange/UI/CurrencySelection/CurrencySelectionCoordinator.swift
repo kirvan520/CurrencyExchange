@@ -23,14 +23,16 @@ class CurrencySelectionCoordinator: BaseCoordinator {
         viewModel.showCurrencyConverterScreen.sink { [weak self] exchangeRateModel in
             guard let self = self else { return }
             
-            self.showCurrencyConverterScreen()
+            self.showCurrencyConverterScreen(exchangeRateModel)
         }.store(in: &cancellables)
         
         let viewController = CurrencySelectionViewController(viewModel: viewModel)
         self.navigationcontroller.setViewControllers([viewController], animated: false)
     }
     
-    private func showCurrencyConverterScreen() {
-        
+    private func showCurrencyConverterScreen(_ model: ExchangeRateModel) {
+        let coordinator = CurrencyConversionCoordinator(navigationcontroller: self.navigationcontroller, model: model)
+        store(coordinator: coordinator)
+        coordinator.start()
     }
 }

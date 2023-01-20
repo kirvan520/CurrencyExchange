@@ -18,15 +18,15 @@ class CurrencySelectionViewModel: NSObject {
     @Published var pickerViewSelectedRow: Int = 0
     @Published var isBaseCurrencySelected: Bool = false
     @Published var amountToConvert: Double = 0.0
-
+    
     private(set) var showCurrencyConverterScreen = PassthroughSubject<ExchangeRateModel, Never>()
     private(set) var showCurrencySelectionPickerView = PassthroughSubject<Int, Never>()
     
     let onAppear = PassthroughSubject<Void, Never>()
-
+    
     private var cancellables: Set<AnyCancellable> = []
     private let service: ExchangeRateServiceProtocol
-
+    
     var isEnableCalcualte: AnyPublisher<Bool, Never> {
         return Publishers
             .CombineLatest3($amountToConvert, $baseCurrency, $targetCurrency)
@@ -36,7 +36,7 @@ class CurrencySelectionViewModel: NSObject {
     }
     
     var exchangeRateAPIRefreshTimeInterval: Double = 5*60*60 // 5 hours
-
+    
     init(service: ExchangeRateServiceProtocol = ExchangeRateService()) {
         self.service = service
         super.init()
@@ -44,10 +44,13 @@ class CurrencySelectionViewModel: NSObject {
         setupBindings()
     }
     
+    // MARK: Private methods
+    
     private func setupBindings() {
         
         onAppear.sink { [weak self] selectedRow in
-            guard let self = self else { return }
+            guard let self = self,
+                  self.supportedCurrencyCodes.isEmpty else { return }
             
             self.getSupportedCurrencyCodes()
         }
@@ -102,6 +105,8 @@ class CurrencySelectionViewModel: NSObject {
             print(error.localizedDescription)
         }
     }
+    
+    // MARK: Public methods
     
     func handleCalculateAction() {
         guard let baseCurrency = baseCurrency,

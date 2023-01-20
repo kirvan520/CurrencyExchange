@@ -137,7 +137,7 @@ class CurrencySelectionViewController: UIViewController {
 // MARK: Showing UIPickerView
 
 extension CurrencySelectionViewController {
-    func showCurrencyPickerViewWith(_ selectedRow: Int) {
+    private func showCurrencyPickerViewWith(_ selectedRow: Int) {
         self.view.endEditing(true)
         
         let size = CGSize(width: UIScreen.main.bounds.width - 16, height: UIScreen.main.bounds.height / 2)
