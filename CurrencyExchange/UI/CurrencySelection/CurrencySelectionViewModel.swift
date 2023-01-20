@@ -19,7 +19,7 @@ class CurrencySelectionViewModel: NSObject {
     @Published var isBaseCurrencySelected: Bool = false
     @Published var amountToConvert: Double = 0.0
     
-    private(set) var showCurrencyConverterScreen = PassthroughSubject<ExchangeRateModel, Never>()
+    private(set) var showCurrencyConverterScreen = PassthroughSubject<ConversionScreenInputData, Never>()
     private(set) var showCurrencySelectionPickerView = PassthroughSubject<Int, Never>()
     
     let onAppear = PassthroughSubject<Void, Never>()
@@ -89,9 +89,11 @@ class CurrencySelectionViewModel: NSObject {
         self.$exchangeRateModel
             .receive(on: RunLoop.main)
             .sink { [weak self] exchangeRateModel in
-                guard let self = self, let model = exchangeRateModel else { return }
-                
-                self.showCurrencyConverterScreen.send(model)
+                guard let self = self,
+                      let model = exchangeRateModel else { return }
+                let inputModel = ConversionScreenInputData(model: model,
+                                                                   amountToConvert: self.amountToConvert)
+                self.showCurrencyConverterScreen.send(inputModel)
             }.store(in: &cancellables)
     }
     

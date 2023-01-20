@@ -45,6 +45,12 @@ class CurrencySelectionViewController: UIViewController {
         viewModel.onAppear.send()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        amountInputTextField.text = nil
+    }
+    
     // MARK: Private methods
     
     private func setupView() {

@@ -37,12 +37,6 @@ class CurrencyConversionViewController: UIViewController {
         setupBindings()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        viewModel.onAppear.send()
-    }
-    
     // MARK: Private methods
     
     private func setupView() {
@@ -76,6 +70,30 @@ class CurrencyConversionViewController: UIViewController {
                 
                 self.showTimeOutError()
             }.store(in: &cancellables)
+        
+        viewModel.$timeLeftLabelColor
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] textColor in
+                guard let self = self else { return }
+                
+                self.timeLeftLabel.textColor = textColor
+            }.store(in: &cancellables)
+        
+        viewModel.$baseCurrencyLabelText
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                guard let self = self else { return }
+                
+                self.baseCurrencyLabel.text = value
+            }.store(in: &cancellables)
+        
+        viewModel.$targetCurrencyLabelText
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] value in
+                guard let self = self else { return }
+                
+                self.targetCurrencyLabel.text = value
+            }.store(in: &cancellables)
     }
     
     private func showTimeOutError() {
@@ -92,7 +110,7 @@ class CurrencyConversionViewController: UIViewController {
     // MARK: UIButton action methods
     
     @IBAction func convertButtonAction(_ sender: Any) {
-        
+        viewModel.handleConvertAction()
     }
     
 }

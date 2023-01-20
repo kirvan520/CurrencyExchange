@@ -11,34 +11,36 @@ import UIKit
 
 class CurrencyConversionViewModel: NSObject {
     
+    @Published private(set) var baseCurrencyLabelText: String = ""
+    @Published private(set) var targetCurrencyLabelText: String = ""
     @Published private(set) var timeLeftLabelText: String = ""
     @Published private(set) var timeLeftLabelColor: UIColor = .black
     
-    let onAppear = PassthroughSubject<Void, Never>()
-    private(set) var showCurrencyConvertionSuccessScreen = PassthroughSubject<Void, Never>()
+    private(set) var showCurrencyConvertionSuccessScreen = PassthroughSubject<SuccessScreenInputData, Never>()
     private(set) var showTimeoutAlert = PassthroughSubject<Void, Never>()
     
     private var cancellables: Set<AnyCancellable> = []
     private var timeLeft: TimeInterval = 30
     private let model: ExchangeRateModel
-    
-    init(model: ExchangeRateModel) {
-        self.model = model
+    private let amountToConvert: Double
+
+    init(_ inputModel: ConversionScreenInputData) {
+        self.model = inputModel.model
+        self.amountToConvert = inputModel.amountToConvert
         super.init()
         
         setupBindings()
+        startTimer()
     }
     
     // MARK: Private methods
     
     private func setupBindings() {
         
-        onAppear.sink { [weak self] selectedRow in
-            guard let self = self else { return }
-            
-            self.startTimer()
-        }
-        .store(in: &cancellables)
+        baseCurrencyLabelText = "\(amountToConvert.amountInStringFormat) \(model.baseCode)"
+        
+        let targetAmount = (amountToConvert * model.conversionRate).amountInStringFormat
+        targetCurrencyLabelText = "\(targetAmount) \(model.targetCode)"
     }
     
     private func startTimer() {
@@ -55,5 +57,13 @@ class CurrencyConversionViewModel: NSObject {
             
             self.timeLeft -= 1
         }
+    }
+    
+    // MARK: Public methods
+
+    func handleConvertAction() {
+        let inputData = SuccessScreenInputData(model: self.model,
+                                               amountToConvert: self.amountToConvert)
+        self.showCurrencyConvertionSuccessScreen.send(inputData)
     }
 }

@@ -20,18 +20,18 @@ class CurrencySelectionCoordinator: BaseCoordinator {
     override func start() {
         let viewModel = CurrencySelectionViewModel()
         
-        viewModel.showCurrencyConverterScreen.sink { [weak self] exchangeRateModel in
+        viewModel.showCurrencyConverterScreen.sink { [weak self] inputModel in
             guard let self = self else { return }
             
-            self.showCurrencyConverterScreen(exchangeRateModel)
+            self.showCurrencyConverterScreen(inputModel)
         }.store(in: &cancellables)
         
         let viewController = CurrencySelectionViewController(viewModel: viewModel)
         self.navigationcontroller.setViewControllers([viewController], animated: false)
     }
     
-    private func showCurrencyConverterScreen(_ model: ExchangeRateModel) {
-        let coordinator = CurrencyConversionCoordinator(navigationcontroller: self.navigationcontroller, model: model)
+    private func showCurrencyConverterScreen(_ inputModel: ConversionScreenInputData) {
+        let coordinator = CurrencyConversionCoordinator(navigationcontroller: self.navigationcontroller, inputModel: inputModel)
         store(coordinator: coordinator)
         coordinator.start()
     }
