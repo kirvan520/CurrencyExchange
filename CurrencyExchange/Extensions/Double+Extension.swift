@@ -1,5 +1,5 @@
 //
-//  Double.swift
+//  Double+Extension.swift
 //  CurrencyExchange
 //
 //  Created by Kiran on 1/20/23.

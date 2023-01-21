@@ -7,6 +7,8 @@
 
 import Foundation
 
+//MARK: Save/Get codable data models
+
 extension UserDefaults {
     func save<T: Encodable>(model: T, forKey key: String) throws {
         do {
@@ -25,6 +27,16 @@ extension UserDefaults {
             return model
         } catch {
             return nil
+        }
+    }
+}
+
+//MARK: Reset UD.
+
+extension UserDefaults {
+    static func resetDefaults() {
+        if let bundleID = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: bundleID)
         }
     }
 }
