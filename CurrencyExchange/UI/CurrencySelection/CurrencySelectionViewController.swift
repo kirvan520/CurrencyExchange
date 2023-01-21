@@ -49,6 +49,7 @@ class CurrencySelectionViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         amountInputTextField.text = nil
+        viewModel.amountToConvert = 0.0
     }
     
     // MARK: Private methods
